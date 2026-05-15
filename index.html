@@ -424,21 +424,6 @@
     
     <div class="toast" id="toast">Уведомление</div>
 
-<!-- ✅ ЗАЩИТА — СТАВИМ СЮДА (перед импортами) -->
-<script>
-    (function() {
-        const allowed = ['a1244866.xsph.ru', 'localhost', '127.0.0.1'];
-        const host = window.location.hostname;
-        
-        if (!allowed.includes(host)) {
-            document.documentElement.innerHTML = '';
-            alert('⛔ ДОСТУП ЗАПРЕЩЁН\nЭтот код работает только на a1244866.xsph.ru');
-            setInterval(() => { throw new Error('Защита активирована'); }, 100);
-            throw new Error('Неавторизованный домен');
-        }
-    })();
-</script>
-
     <script type="importmap">
         {
             "imports": {
@@ -539,7 +524,7 @@
         }
         
         // ============================================
-        // СОЗДАНИЕ ТЕКСТУРЫ КАРБОНА (реалистичное плетение)
+        // СОЗДАНИЕ ТЕКСТУРЫ КАРБОНА 
         // ============================================
         function createCarbonTexture() {
             const canvas = document.createElement('canvas');
@@ -547,14 +532,12 @@
             canvas.height = 1024;
             const ctx = canvas.getContext('2d');
             
-            // Тёмная основа с лёгким градиентом для глубины
             const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
             grad.addColorStop(0, '#111');
             grad.addColorStop(1, '#1a1a1a');
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Рисуем основное плетение (ромбы)
             ctx.strokeStyle = '#aaa';
             ctx.lineWidth = 14;
             const step = 56;
@@ -571,7 +554,6 @@
                 ctx.stroke();
             }
             
-            // Добавляем вторую сетку (более тонкую) для реалистичности
             ctx.strokeStyle = '#777';
             ctx.lineWidth = 6;
             const step2 = step / 2;
@@ -588,7 +570,6 @@
                 ctx.stroke();
             }
             
-            // Добавляем блики на пересечениях
             ctx.fillStyle = '#ccc';
             for (let x = -canvas.width; x < canvas.width + canvas.height; x += step) {
                 for (let y = -canvas.height; y < canvas.height + canvas.width; y += step) {
@@ -636,7 +617,6 @@
             controls.target.set(0, 0.6, 0);
             controls.update();
             
-            // Вспомогательные элементы
             const gridHelper = new THREE.GridHelper(12, 24, 0x88aaff, 0x335588);
             gridHelper.position.y = -0.85;
             gridHelper.material.transparent = true;
@@ -653,7 +633,7 @@
         }
         
         // ============================================
-        // LIGHTING SYSTEM (улучшенное освещение)
+        // LIGHTING SYSTEM
         // ============================================
         function initLighting() {
             const ambientLight = new THREE.AmbientLight(0x404060, 0.65);
@@ -784,7 +764,7 @@
         }
         
         // ============================================
-        // MATERIAL MANAGER (с поддержкой текстуры карбона)
+        // MATERIAL MANAGER
         // ============================================
         function changeColor(hexColor) {
             if (!currentModel) return;
@@ -1020,7 +1000,7 @@
     initScene();
     initLighting();
     initColorButtons();
-    initMaterialButtons();  // <-- добавил эту строку
+    initMaterialButtons();  
     initCameraButtons();
     initDragAndDrop();
     
